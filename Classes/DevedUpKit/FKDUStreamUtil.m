@@ -65,7 +65,10 @@
     NSInteger startactualWrittenLength = [startStream write:[openingData bytes] maxLength:startwriteLength];
     
     [startStream close];
-    NSAssert(startactualWrittenLength == startwriteLength, @"Start string not writtern");
+    
+    if (startactualWrittenLength != startwriteLength) {
+        NSAssert(false, @"Start string not writtern");
+    }
     
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -121,7 +124,10 @@
     NSInteger actualWrittenLength = [endStream write:[closingData bytes] maxLength:writeLength];
     
     [endStream close];
-    NSAssert(actualWrittenLength == writeLength, @"Closing string not written");
+    
+    if (actualWrittenLength != writeLength) {
+        NSAssert(false, @"Closing string not written");
+    }
 }
 
 @end
